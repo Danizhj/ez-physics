@@ -21,9 +21,9 @@ body {
 }
 
 header {
-  @apply bg-background-secondary max-w-full flex justify-start items-center;
+  @apply bg-background-secondary max-w-full flex justify-baseline items-center;
 }
 
 form {
-  @apply flex flex-col items-center justify-center mt-90 mb-90 max-w-full;
+  @apply flex flex-col items-center justify-center mt-70 mb-30 max-w-full;
 }
