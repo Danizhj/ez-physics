@@ -17,9 +17,6 @@ export default function Home() {
             EZ PHYSICS
           </h1>
         </div>
-        <p className="text-main-color mr-7">
-          Проект сделан Жакыпбай Данияром от школы-гимназии номер 23
-        </p>
       </header>
       <Form />
     </main>
