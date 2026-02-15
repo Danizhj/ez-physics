@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Form = () => {
   const [problem, setProblem] = useState("");
@@ -9,62 +9,44 @@ const Form = () => {
   const [diagramB64, setDiagramB64] = useState("");
   const [withDescription, setWithDescription] = useState(false);
   const [withDiagram, setWithDiagram] = useState(false);
+  const [thinking, setThinking] = useState(false);
+
+  useEffect(() => {
+    const savedState = localStorage.getItem("ezPhysicsState");
+    if (savedState) {
+      const { problem, solution, diagramB64, withDescription, withDiagram } =
+        JSON.parse(savedState);
+      setProblem(problem);
+      setSolution(solution);
+      setDiagramB64(diagramB64);
+      setWithDescription(withDescription);
+      setWithDiagram(withDiagram);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "ezPhysicsState",
+      JSON.stringify({
+        problem,
+        solution,
+        diagramB64,
+        withDescription,
+        withDiagram,
+      }),
+    );
+  }, [problem, solution, diagramB64, withDescription, withDiagram]);
 
   async function solveProblem() {
-    // const res = await fetch("/api/solve", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ problem }),
-    // });
-    // const data = await res.json();
-    // setSolution(data.solution);
-    // setDiagramB64(data.diagram);
-    // console.log(diagramB64);
-
-    setSolution(`Дано
-  
-Скорость первого автомобиля V1 = 12 м/с.  
-Время движения первого автомобиля t1 = 10 с.  
-Время движения второго автомобиля t2 = 15 с.  
-
-CИ
-  
-Скорость - метры в секунду (м/с).  
-Время - секунды (с).  
-Путь - метры (м).  
-
-Вывод формулы
-  
-Путь можно найти по формуле: путь = скорость * время.  
-Для первого автомобиля: S1 = V1 * t1.  
-Для второго автомобиля: S2 = V2 * t2, где V2 - скорость второго автомобиля.
-
-Поскольку пути равны, можно записать:  
-S1 = S2.  
-Тогда получаем уравнение: V1 * t1 = V2 * t2.
-
-Решение
-  
-Подставляем известные значения в уравнение:  
-12 м/с * 10 с = V2 * 15 с.  
-120 м = V2 * 15 с.  
-V2 = 120 м / 15 с.  
-V2 = 8 м/с.
-
-Объяснение
-  
-Сначала мы определили путь, который прошел первый автомобиль, используя его скорость и время движения. Затем, поскольку известно, что оба автомобиля прошли одинаковый путь, мы составили уравнение, приравняв пути. Из этого уравнения выразили скорость второго автомобиля и подставили известные значения, чтобы найти V2.  
-
-Ответ
-  
-Скорость второго автомобиля составляет 8 м/с.`);
-
-    setDiagramB64(
-      "https://conceptdraw.com/How-To-Guide/picture/Science-Education-Physics-Free-Body-Diagram.png",
-    );
-    console.log(problem);
-    console.log(withDescription);
-    console.log(withDiagram);
+    const res = await fetch("/api/solve", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ problem, withDescription, withDiagram }),
+    });
+    const data = await res.json();
+    setSolution(data.solution);
+    setDiagramB64(data.diagram);
+    setThinking(false);
   }
 
   return (
@@ -73,6 +55,7 @@ V2 = 8 м/с.
         onSubmit={(e) => {
           e.preventDefault();
           solveProblem();
+          setThinking(true);
         }}
       >
         <h2 className="text-main-color text-3xl font-bold mb-3">
@@ -113,6 +96,25 @@ V2 = 8 м/с.
           </label>
         </div>
       </form>
+      {thinking && (
+        <div className="flex items-center gap-2 py-4">
+          <p className="text-main-color font-bold text-xl">Думаю</p>
+          <div className="flex gap-1">
+            <span
+              className="w-2 h-2 bg-main-color rounded-full animate-bounce"
+              style={{ animationDelay: "0s" }}
+            ></span>
+            <span
+              className="w-2 h-2 bg-main-color rounded-full animate-bounce"
+              style={{ animationDelay: "0.1s" }}
+            ></span>
+            <span
+              className="w-2 h-2 bg-main-color rounded-full animate-bounce"
+              style={{ animationDelay: "0.2s" }}
+            ></span>
+          </div>
+        </div>
+      )}
       {solution && (
         <div className="max-w-[90vw] p-5 border-main-color border-3 rounded-2xl bg-background">
           <div
@@ -145,8 +147,13 @@ V2 = 8 м/с.
                 ),
             }}
           ></div>
-          {/* <img src={`data:image/png;base64,${diagramB64}`} alt="diagram" /> */}
-          <img src={diagramB64} className="max-w-70 h-70" />
+          {diagramB64 && (
+            <img
+              src={`data:image/png;base64,${diagramB64}`}
+              alt="diagram"
+              className="w-120"
+            />
+          )}
         </div>
       )}
     </div>
