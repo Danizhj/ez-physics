@@ -21,9 +21,13 @@ body {
 }
 
 header {
-  @apply bg-background-secondary max-w-full flex justify-baseline items-center;
+  @apply bg-background-secondary max-w-full flex justify-between items-center;
 }
 
-form {
-  @apply flex flex-col items-center justify-center mt-70 mb-30 max-w-full;
+.popup-menu-enter {
+  animation: slideDown 0.3s ease-out;
+}
+
+.popup-menu-exit {
+  animation: slideUp 0.3s ease-out;
 }

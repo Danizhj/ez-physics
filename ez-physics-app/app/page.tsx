@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Form from "@/components/Form";
+import Menu from "@/components/Menu";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
             EZ PHYSICS
           </h1>
         </div>
+        <Menu />
       </header>
       <Form />
     </main>

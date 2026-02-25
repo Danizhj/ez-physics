@@ -49,14 +49,29 @@ const Form = () => {
     setThinking(false);
   }
 
+  async function saveProblem() {
+    await fetch("/api/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        problem,
+        solution,
+        diagram: diagramB64 || null,
+      }),
+    });
+  }
+
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center bg-[url('/background.png')] bg-cover bg-center min-h-screen ">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           solveProblem();
           setThinking(true);
         }}
+        className="flex flex-col items-center justify-center mt-70 mb-30 max-w-full"
       >
         <h2 className="text-main-color text-3xl font-bold mb-3">
           Введите задачу
@@ -78,7 +93,7 @@ const Form = () => {
               className="sr-only peer"
               onChange={(e) => setWithDescription(e.target.checked)}
             />
-            <span className="px-6 py-2 bg-background text-main-color rounded-lg font-semibold transition-all duration-200 peer-checked:bg-main-color peer-checked:text-background peer-checked:shadow-lg hover:shadow-md border-2 border-main-color border-opacity-30 peer-checked:border-main-color peer-checked:border-opacity-100">
+            <span className="px-6 py-2 bg-background text-foreground rounded-lg font-semibold transition-all duration-200 peer-checked:bg-main-color peer-checked:text-background peer-checked:shadow-lg hover:shadow-md border-2 border-main-color border-opacity-30 peer-checked:border-main-color peer-checked:border-opacity-100">
               Объяснение
             </span>
           </label>
@@ -90,7 +105,7 @@ const Form = () => {
               className="sr-only peer"
               onChange={(e) => setWithDiagram(e.target.checked)}
             />
-            <span className="px-6 py-2 bg-background text-main-color rounded-lg font-semibold transition-all duration-200 peer-checked:bg-main-color peer-checked:text-background peer-checked:shadow-lg hover:shadow-md border-2 border-main-color border-opacity-30 peer-checked:border-main-color peer-checked:border-opacity-100">
+            <span className="px-6 py-2 bg-background text-foreground rounded-lg font-semibold transition-all duration-200 peer-checked:bg-main-color peer-checked:text-background peer-checked:shadow-lg hover:shadow-md border-2 border-main-color border-opacity-30 peer-checked:border-main-color peer-checked:border-opacity-100">
               Диаграмма
             </span>
           </label>
@@ -154,6 +169,12 @@ const Form = () => {
               className="w-120"
             />
           )}
+          <button
+            onClick={saveProblem}
+            className="mt-4 px-6 py-2 bg-main-color text-background rounded-lg font-semibold transition-all duration-200 hover:shadow-lg hover:scale-105 active:scale-95 shadow-sm"
+          >
+            Сохранить
+          </button>
         </div>
       )}
     </div>
