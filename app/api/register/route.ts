@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { pool } from "@/lib/db";
 import bcrypt from "bcrypt";
+export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   const { email, password } = await req.json();

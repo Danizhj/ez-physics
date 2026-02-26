@@ -3,6 +3,8 @@ import { pool } from "@/lib/db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+export const runtime = "nodejs";
+
 export async function POST(req: Request) {
   const { email, password } = await req.json();
 

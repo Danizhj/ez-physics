@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { pool } from "@/lib/db";
+export const runtime = "nodejs";
 
 export async function GET(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
