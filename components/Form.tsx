@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import React from "react";
 import { useState, useEffect } from "react";
 
@@ -64,7 +63,7 @@ const Form = () => {
   }
 
   return (
-    <div className="flex flex-col items-center bg-[url('/background.png')] bg-cover bg-center min-h-screen ">
+    <div className="flex flex-col items-center">
       <form
         onSubmit={(e) => {
           e.preventDefault();

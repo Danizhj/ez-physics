@@ -3,9 +3,7 @@
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import Menu from "@/components/Menu";
+import Header from "@/components/Header";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -36,24 +34,8 @@ const LoginPage = () => {
   }
   return (
     <div>
-      <header>
-        <Link href="/">
-          <div className="flex justify-center items-center">
-            <Image
-              src="/icon-physics.png"
-              alt="physics icon"
-              width={70}
-              height={70}
-              className="m-4"
-            />
-            <h1 className="text-main-color font-bold text-4xl tracking-wide">
-              EZ PHYSICS
-            </h1>
-          </div>
-        </Link>
-        <Menu />
-      </header>
-      <div className="bg-[url('/background.png')] bg-cover bg-center min-h-screen flex items-center justify-center">
+      <Header />
+      <div className="flex items-center justify-center">
         <div className="flex flex-col items-center justify-center bg-background border-main-color border-3 rounded-2xl p-6">
           <h1 className="text-main-color text-3xl font-bold">Вход</h1>
           <form

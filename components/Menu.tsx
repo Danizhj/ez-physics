@@ -16,8 +16,14 @@ const Menu = () => {
   const [popup, setPopup] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [mobile, setMobile] = useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const isMobile = () => setMobile(window.innerWidth < 768);
+    isMobile();
+  }, []);
 
   useEffect(() => {
     async function getLoginInfo() {
@@ -56,30 +62,20 @@ const Menu = () => {
         <Image
           src={pfpDefault}
           alt="pfp"
-          height={50}
-          width={50}
+          height={40}
+          width={40}
           className="rounded-[100vw]"
         />
-        <h2 className="text-foreground">{userName}</h2>
+        {!mobile && <h2 className="text-foreground ">{userName}</h2>}
       </div>
       {popup && (
         <ul
           className={
-            "absolute top-23 right-2 p-3 flex flex-col bg-background-secondary rounded-b-2xl"
+            "absolute top-19 right-2 p-3 flex flex-col bg-background-secondary rounded-b-2xl"
           }
         >
-          {loggedIn && (
-            <Link href="/settings">
-              <li className="px-2 py-2.5 flex items-center gap-3 cursor-pointer">
-                <Image
-                  src={settingsImg}
-                  alt="settings"
-                  width={25}
-                  height={25}
-                />
-                Настройки
-              </li>
-            </Link>
+          {loggedIn && mobile && (
+            <li className="px-2 py-2.5 text-main-color">{userName}</li>
           )}
 
           <Link href="/info">
