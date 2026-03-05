@@ -26,7 +26,7 @@ const RegisterPage = () => {
     <div>
       <Header />
       <div className="flex items-center justify-center">
-        <div className="flex flex-col items-center justify-center bg-background border-main-color border-3 rounded-2xl p-6">
+        <div className="flex flex-col items-center justify-center bg-background border-main-color border-3 rounded-2xl p-6 mt-20 md:mt-60">
           <h1 className="text-main-color text-3xl font-bold">Регистрация</h1>
           <form
             className="w-[60vw] flex flex-col items-center gap-4 my-10"
